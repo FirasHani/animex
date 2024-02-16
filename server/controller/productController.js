@@ -35,6 +35,12 @@ const deleteProduct=asyncHandler(async(req,res) => {
 const showProduct=asyncHandler(async(req,res) => {
    await Product.find().then((e)=>res.json(e))
 })
+// @desc  show product
+// @route GET product/showProduct
+// @access public
+const TEst=asyncHandler(async(req,res) => {
+    await Product.find().then((e)=>res.json(e))
+ })
 module.exports={
     addProduct,
     showProduct,
