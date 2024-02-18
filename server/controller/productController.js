@@ -11,8 +11,8 @@ const addProduct=asyncHandler(async(req,res) => {
         productQuantity
     }).then(res.json("new product added"))
 })
-// @desc  edit product
-// @route PUT product/editProduct/:id
+// @desc   edit product
+// @route  PUT product/editProduct/:id
 // @access Admin
 const editProduct=asyncHandler(async(req,res) => {
     const user={id:req.user.id}

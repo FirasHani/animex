@@ -16,7 +16,7 @@ const addTestimonial =asyncHandler(async(req,res) => {
          }).then(res.json("message added"))
 })
 // @desc  edit testimonial
-// @route POST testimonial/editTestimonial/:id
+// @route PUT testimonial/editTestimonial/:id
 // @access Private
 const editTestimonial=asyncHandler(async(req,res) => {
     const user={id:req.user._id}
@@ -31,7 +31,7 @@ const editTestimonial=asyncHandler(async(req,res) => {
     }
 })
 // @desc  delete testimonial
-// @route POST testimonial/deleteTestimonial/:id
+// @route DELETE testimonial/deleteTestimonial/:id
 // @access Private
 const deleteTestimonial=asyncHandler(async(req,res) => {
     const user={id:req.user._id}
@@ -66,7 +66,7 @@ const likeTestimonial=asyncHandler(async(req,res) => {
     await Testimonial.updateOne({ "_id": req.params.id }, { $addToSet: { "like": like } }).then(res.json("user like"))
 })
 // @desc  remove testimonial
-// @route POST testimonial/removeLikeTestimonial/:id
+// @route DELETE testimonial/removeLikeTestimonial/:id
 // @access Private
 const removeLikeTestimonial=asyncHandler(async(req,res) => {
     const user={  
