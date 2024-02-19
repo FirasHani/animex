@@ -1,15 +1,32 @@
 const asyncHandler = require('express-async-handler')
 const Order =require('../model/orderModel')
 const Product=require('../model/productModel')
+// @desc  get order page (generate it)
+// @route GET order/getOrderProduct
+// @access Private
+const getOrderProduct =asyncHandler(async(req,res)=>{
+    const userId=req.user.id
+    const name=req.user.name
+    const checkUser=  await Order.findOne({
+    "user.id":userId,
+})
+  if(checkUser){
+    res.json("user has a Cart")
+  }
+  else{
+    await Order.create({
+        user:{
+            id:userId,
+            name:req.user.name
+        }
+    }).then((e)=>res.json(e))
+  }
+})
 // @desc  add product
 // @route POST order/orderProduct
 // @access Private
 const orderProduct =asyncHandler(async(req,res) => {
-    const user={  
-        idUser:req.user.id,
-        name:req.user.name
-    }
-    const idParm=req.params.id 
+    const userId=req.user.id
     const Products={
         productID:req.body.productID,
         productName:req.body.productName,
@@ -17,19 +34,18 @@ const orderProduct =asyncHandler(async(req,res) => {
     }
     let orderProducts=[]
     orderProducts.push(Products)
-  let x=  await Product.find({idParm:Products.productID})
-  console.log(x)
-  if(x!=null){
-   // await Order.create({user,orderProducts}).then((e) =>res.json(e))
-
-    await Order.updateOne({ "_id": req.params.id }, { $addToSet: { "orderProducts":orderProducts } })
+    const checkCart=  await Order.findOne({
+        "user.id":userId,
+    })
+    if(checkCart){
+    await Order.updateOne({ "user.id": userId }, { $addToSet: { "orderProducts":orderProducts } })
     .then((e)=>res.json(e))
+    }
+  else{
+     res.json("no products")
   }
-  res.json("no products")
-   
-
 })
-
 module.exports={
-    orderProduct
+    orderProduct,
+    getOrderProduct
 }
