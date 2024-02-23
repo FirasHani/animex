@@ -4,11 +4,12 @@ const Product =require('../model/productModel')
 // @route POST product/addProduct
 // @access Admin
 const addProduct=asyncHandler(async(req,res) => {
-    const {productName,productPrice,productQuantity} = req.body
+    const {productName,productPrice,productQuantity,genre} = req.body
     await Product.create({
         productName,
         productPrice,
-        productQuantity
+        productQuantity,
+        genre
     }).then(res.json("new product added"))
 })
 // @desc   edit product
@@ -17,8 +18,8 @@ const addProduct=asyncHandler(async(req,res) => {
 const editProduct=asyncHandler(async(req,res) => {
     const user={id:req.user.id}
     const id=req.params.id
-    const {productName,productPrice,productQuantity} = req.body
-        await Product.findByIdAndUpdate(id,{productName,productPrice,productQuantity},{new:true})
+    const {productName,productPrice,productQuantity,genre} = req.body
+        await Product.findByIdAndUpdate(id,{productName,productPrice,productQuantity,genre},{new:true})
         .then(res.json("product updated"))
 })
 // @desc  delete product
