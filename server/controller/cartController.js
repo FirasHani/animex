@@ -9,8 +9,6 @@ const addToCart =asyncHandler(async(req,res) => {
     let orderProducts=[]
     const idParm=req.params.id  
    const product= await Product.findById(idParm)
-   console.log(product)
-   console.log(product.productName)
    if(product){
     const products={
       productID:idParm,
@@ -32,7 +30,6 @@ const deleteProductInCart=asyncHandler(async(req,res)=>{
     "user.id":userId,
     })
     if(checkCart){
-      console.log(req.params)
     await Order.updateOne({"_id":checkCart._id},{$pull:{"orderProducts":{"id":req.params}}},{multi:true})
             .then(res.json("product reomoved")) 
           }
@@ -45,7 +42,6 @@ const deleteProductInCart=asyncHandler(async(req,res)=>{
 // @access Private
 const getTotalAmmount =asyncHandler(async(req,res)=>{
   const userId=req.user.id
-  console.log(userId)
   const checkCart=  await Order.findOne({
   "user.id":userId,
 })
