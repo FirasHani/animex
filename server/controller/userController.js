@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const asyncHandler = require('express-async-handler')
 const User =require('../model/userModel')
-const Order =require('../model/cartModel')
+const Cart =require('../model/cartModel')
 var nodemailer = require('nodemailer')
 // @desc registerUser
 // @route POST user/registerUser
@@ -29,7 +29,7 @@ const registerUser=asyncHandler(async(req,res)=>{
             isAdmain,
             token: generateToken(user._id),
           })
-          await Order.create({
+          await Cart.create({
             user:{
                 id:user.id,
                 name:user.name

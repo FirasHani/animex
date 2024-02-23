@@ -1,5 +1,5 @@
 const asyncHandler = require('express-async-handler')
-const Order =require('../model/cartModel')
+const Cart =require('../model/cartModel')
 const Product=require('../model/productModel')
 // @desc  add to cart
 // @route POST cart/addToCart/:id
@@ -18,8 +18,9 @@ const addToCart =asyncHandler(async(req,res) => {
     }
     orderProducts.push(products)
    }
-      await Order.updateOne({"user.id":userId},{$addToSet:{"orderProducts":orderProducts}})
+      await Cart.updateOne({"user.id":userId},{$addToSet:{"orderProducts":orderProducts}})
       .then(res.json("added to cart"))
+      
 })
 // @desc  delete a single product in cart 
 // @route GET cart/deleteProductInCart/:id
@@ -30,7 +31,7 @@ const deleteProductInCart=asyncHandler(async(req,res)=>{
     "user.id":userId,
     })
     if(checkCart){
-    await Order.updateOne({"_id":checkCart._id},{$pull:{"orderProducts":{"id":req.params}}},{multi:true})
+    await Cart.updateOne({"_id":checkCart._id},{$pull:{"orderProducts":{"id":req.params}}},{multi:true})
             .then(res.json("product reomoved")) 
           }
           else{
@@ -42,7 +43,7 @@ const deleteProductInCart=asyncHandler(async(req,res)=>{
 // @access Private
 const getTotalAmmount =asyncHandler(async(req,res)=>{
   const userId=req.user.id
-  const checkCart=  await Order.findOne({
+  const checkCart=  await Cart.findOne({
   "user.id":userId,
 })
 let ammount=0 
