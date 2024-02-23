@@ -20,7 +20,6 @@ const addToCart =asyncHandler(async(req,res) => {
    }
       await Cart.updateOne({"user.id":userId},{$addToSet:{"orderProducts":orderProducts}})
       .then(res.json("added to cart"))
-      
 })
 // @desc  delete a single product in cart 
 // @route GET cart/deleteProductInCart/:id
