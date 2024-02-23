@@ -55,8 +55,6 @@ const likeTestimonial=asyncHandler(async(req,res) => {
     const idParm=req.params.id  
     const testimonial= await Testimonial.findById(idParm)
     let len=testimonial.like
-    console.log(len.length)
-    console.log(JSON.stringify(user.idUser))
     for(let i=0; i<len.length; i++){
         if(JSON.stringify(testimonial.like[i].idUser) ==  JSON.stringify(user.idUser) )
         res.json("user has a like")
